@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("rd_android.android.feature")
     id("rd_android.android.library.compose")
@@ -17,9 +19,15 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    buildFeatures {
+        aidl = true
+    }
 }
 
 dependencies {
+    implementation(project(":open-cv"))
+
     // Navigation
     implementation(Dependencies.Google.Accompanist.navigationAnimation)
     implementation(Dependencies.Compose.Material.iconExtended)
