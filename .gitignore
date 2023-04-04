@@ -89,3 +89,6 @@ lint/tmp/
 
 .DS_Store
 */*/.DS_Store
+
+.cxx
+*/*/.cxx

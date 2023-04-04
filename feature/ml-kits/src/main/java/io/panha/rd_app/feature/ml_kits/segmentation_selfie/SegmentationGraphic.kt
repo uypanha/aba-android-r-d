@@ -23,7 +23,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColor
 import com.google.mlkit.vision.segmentation.SegmentationMask
 import io.panha.rd_app.feature.ml_kits.GraphicOverlay
-import io.panha.rd_app.feature.ml_kits.bluralgo.BlurStackOptimized
+import io.panha.rd_app.feature.ml_kits.helper.BlurHelper
 import java.nio.ByteBuffer
 
 /** Draw the mask from SegmentationResult in preview.  */
@@ -42,14 +42,14 @@ class SegmentationGraphic(overlay: GraphicOverlay, segmentationMask: Segmentatio
         var bitmap = Bitmap.createBitmap(
             maskColorsFromByteBuffer(mask, this.original?.toIntArray()), maskWidth, maskHeight, Bitmap.Config.ARGB_8888
         )
-        bitmap = BlurStackOptimized().blur(bitmap, 5)
+        bitmap = BlurHelper.blur(bitmap)//BlurStackOptimized().blur(bitmap, 5)
 
         if (isRawSizeMaskEnabled) {
-            val matrix = Matrix(getTransformationMatrix())
+            val matrix = Matrix(transformationMatrix)
             matrix.preScale(scaleX, scaleY)
             canvas.drawBitmap(bitmap, matrix, null)
         } else {
-            canvas.drawBitmap(bitmap, getTransformationMatrix(), null)
+            canvas.drawBitmap(bitmap, transformationMatrix, null)
         }
         bitmap.recycle()
         // Reset byteBuffer pointer to beginning, so that the mask can be redrawn if screen is refreshed
@@ -86,9 +86,9 @@ class SegmentationGraphic(overlay: GraphicOverlay, segmentationMask: Segmentatio
         maskWidth = segmentationMask.width
         maskHeight = segmentationMask.height
         isRawSizeMaskEnabled =
-            maskWidth != overlay.getImageWidth() || maskHeight != overlay.getImageHeight()
-        scaleX = overlay.getImageWidth() * 1f / maskWidth
-        scaleY = overlay.getImageHeight() * 1f / maskHeight
+            maskWidth != overlay.imageWidth || maskHeight != overlay.imageHeight
+        scaleX = overlay.imageWidth * 1f / maskWidth
+        scaleY = overlay.imageHeight * 1f / maskHeight
     }
 }
 
@@ -108,10 +108,10 @@ fun Bitmap.toIntArray(): IntArray {
     return intArray
 }
 
-fun getIntArray(byteBuffer: ByteBuffer): IntArray {
-    val array = IntArray(byteBuffer.capacity())
-    for (i in array.indices) {
-        array[i] = byteBuffer.getInt(i)
-    }
-    return array
-}
+//fun getIntArray(byteBuffer: ByteBuffer): IntArray {
+//    val array = IntArray(byteBuffer.capacity())
+//    for (i in array.indices) {
+//        array[i] = byteBuffer.getInt(i)
+//    }
+//    return array
+//}

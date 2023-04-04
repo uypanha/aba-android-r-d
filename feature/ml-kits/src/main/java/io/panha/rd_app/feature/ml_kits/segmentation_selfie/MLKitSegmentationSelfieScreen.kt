@@ -37,6 +37,7 @@ import io.panha.core.designsystem.component.RDTopAppBar
 import io.panha.core.designsystem.component.demoLottie
 import io.panha.rd_app.feature.ml_kits.GraphicOverlay
 import kotlinx.coroutines.launch
+import org.opencv.android.OpenCVLoader
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import kotlin.coroutines.resume
@@ -50,6 +51,7 @@ internal fun MLKitSegmentationSelfieRoute(onBackClick: () -> Unit) {
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun MLKitSegmentationSelfieScreen(onBackClick: () -> Unit) {
+    OpenCVLoader.initDebug()
     Scaffold(
         topBar = {
             RDTopAppBar(

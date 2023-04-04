@@ -36,3 +36,5 @@ include(":feature:topic")
 include(":feature:sse")
 include(":feature:mini-app")
 include(":feature:ml-kits")
+
+include(":open-cv")
