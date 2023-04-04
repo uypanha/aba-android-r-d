@@ -23,8 +23,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColor
 import com.google.mlkit.vision.segmentation.SegmentationMask
 import io.panha.rd_app.feature.ml_kits.GraphicOverlay
-import io.panha.rd_app.feature.ml_kits.bluralgo.BlurStackOptimized
-import io.panha.rd_app.feature.ml_kits.helper.OpenCVHelper
+import io.panha.rd_app.feature.ml_kits.helper.BlurHelper
 import java.nio.ByteBuffer
 
 /** Draw the mask from SegmentationResult in preview.  */
@@ -43,7 +42,7 @@ class SegmentationGraphic(overlay: GraphicOverlay, segmentationMask: Segmentatio
         var bitmap = Bitmap.createBitmap(
             maskColorsFromByteBuffer(mask, this.original?.toIntArray()), maskWidth, maskHeight, Bitmap.Config.ARGB_8888
         )
-        bitmap = OpenCVHelper.blur(bitmap)//BlurStackOptimized().blur(bitmap, 5)
+        bitmap = BlurHelper.blur(bitmap)//BlurStackOptimized().blur(bitmap, 5)
 
         if (isRawSizeMaskEnabled) {
             val matrix = Matrix(transformationMatrix)
